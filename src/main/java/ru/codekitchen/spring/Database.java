@@ -15,7 +15,13 @@ public class Database {
     public static void initDatabase() {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
-            stmt.execute("CREATE TABLE IF NOT EXISTS links (url TEXT, token TEXT)");
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS links (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    url TEXT NOT NULL,
+                    token TEXT UNIQUE
+                )
+             """);
         } catch (SQLException e) {
             System.err.println("Ошибка инициализации БД: " + e.getMessage());
         }
